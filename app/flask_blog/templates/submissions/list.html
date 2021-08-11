@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+<table class="table">
+    <caption>List of Submissions</caption>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>problem</th>
+            <th>language</th>
+            <th>status</th>
+        </tr>
+    </thead>
+    {% for submission in submissions %}
+    <tr>
+        <th><a href="{{ url_for('submission.show_submission',id=submission.id) }}">{{ submission.id }}</a></th>
+        <th>{{ submission.problem_id }}</th>
+        <th>{{ submission.language }}</th>
+        <th>{{ submission.status }}</th>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

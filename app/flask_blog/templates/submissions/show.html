@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>提出#{{ submission.id }}</h2>
+<br>
+<h3>ソースコード</h3>
+<pre><code>
+{{ submission.code|safe }}
+</code></pre>
+<br>
+<h3>提出情報</h3>
+<table class="table">
+    <tbody>
+        <tr>
+            <td scope="row">提出日時</td>
+            <td>{{ submission.submitted_at }}</td>
+        </tr>
+        <tr>
+            <td scope="row">問題</td>
+            <td><a href="{{ url_for('problem.show_problem',id=submission.problem_id) }}">{{ submission.problem_id }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">言語</td>
+            <td>{{ submission.language }}</td>
+        </tr>
+        <tr>
+            <td scope="row">結果</td>
+            <td>{{ submission.status }}</td>
+        </tr>
+    </tbody>
+</table>
+<br><br>
+
+{% endblock %}

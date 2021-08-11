@@ -1,0 +1,24 @@
+[2021-08-11 06:48:37.905] [remoteagent] [info] 
+
+*
+* Visual Studio Code Server
+*
+* Reminder: You may only use this software with Visual Studio family products,
+* as described in the license https://aka.ms/vscode-remote/license
+*
+
+
+[2021-08-11 06:48:37.905] [remoteagent] [info] Extension host agent started.
+[2021-08-11 06:48:38.168] [remoteagent] [info] [::ffff:127.0.0.1][7f5d9fbb][ManagementConnection] New connection established.
+[2021-08-11 06:48:38.714] [remoteagent] [info] [::ffff:127.0.0.1][351eff33][ExtensionHostConnection] New connection established.
+[2021-08-11 06:48:38.723] [remoteagent] [info] [::ffff:127.0.0.1][351eff33][ExtensionHostConnection] <257> Launched Extension Host Process.
+[2021-08-11 06:48:39.163] [remoteagent] [info] Installing extension: ms-ceintl.vscode-language-pack-ja
+[2021-08-11 06:48:39.628] [remoteagent] [info] Downloaded extension: ms-ceintl.vscode-language-pack-ja /root/.vscode-server/extensionsCache/ms-ceintl.vscode-language-pack-ja-1.59.3
+[2021-08-11 06:48:39.920] [remoteagent] [info] Extracted extension to /root/.vscode-server/extensions/.4fab8eff-4630-46b6-8d6c-c94a2ce7dad5: ms-ceintl.vscode-language-pack-ja
+[2021-08-11 06:48:39.928] [remoteagent] [info] Renamed to /root/.vscode-server/extensions/ms-ceintl.vscode-language-pack-ja-1.59.3
+[2021-08-11 06:48:39.930] [remoteagent] [info] Extracting completed. ms-ceintl.vscode-language-pack-ja
+[2021-08-11 06:48:39.937] [remoteagent] [info] Adding language packs from the extension ms-ceintl.vscode-language-pack-ja
+[2021-08-11 06:48:39.970] [remoteagent] [info] Extensions is already requested to install ms-ceintl.vscode-language-pack-ja
+[2021-08-11 06:48:39.981] [remoteagent] [info] Extension installed successfully: ms-ceintl.vscode-language-pack-ja
+[2021-08-11 08:43:32.827] [remoteagent] [info] [::ffff:127.0.0.1][7f5d9fbb][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+[2021-08-11 08:43:33.929] [remoteagent] [info] [::ffff:127.0.0.1][351eff33][ExtensionHostConnection] <257> Extension Host Process exited with code: 0, signal: null.

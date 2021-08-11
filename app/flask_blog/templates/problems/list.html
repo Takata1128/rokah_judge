@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+<ul class='list-group list-group-flush'>
+    {% for problem in problems %}
+    <div class="card">
+        <img class="card-img-top" src="holder.js/100x180/" alt="">
+        <div class="card-body">
+            <h4 class="card-title"><a href="{{ url_for('problem.show_problem',id=problem.id) }}">{{ problem.title }}</a>
+            </h4>
+            <p class="card-text">{{ problem.time_limit }}sec / {{ problem.memory_limit }}MB</p>
+        </div>
+    </div>
+    {% else %}
+    問題がありません
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,50 @@
+version: '3'
+services:
+  docker_postgres:
+    container_name: postgres
+    image: postgres:11.5
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: atcoder_problems
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8
+  
+  rabbitmq:
+    container_name: rabbitmq
+    tty: true
+    image: rabbitmq:3.8-management-alpine
+    ports: 
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq
+  
+  judge_server:
+    container_name: judge_server
+    build: ./judge/
+    image: judge_server
+    restart: always
+    depends_on: 
+      - docker_postgres
+      - rabbitmq
+    volumes:
+      - ./judge:/root/
+
+  app:
+    container_name: app
+    build: .
+    image: flask_with_postgres
+    depends_on:
+      - docker_postgres
+    ports:
+      - 5000:5000
+    volumes: 
+      - ./app:/code/app
+    stdin_open: true
+    environment:
+      ENV_CONFIG: docker
+      SQLALCHEMY_POOL_SIZE: 5
+      SQLALCHEMY_MAX_OVERFLOW: 10
+      SQLALCHEMY_POOL_TIMEOUT: 30
