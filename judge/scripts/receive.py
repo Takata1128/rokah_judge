@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import pika, sys, os
+import pika, sys, os, json
+from judge import judge
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
@@ -9,7 +10,8 @@ def main():
 
     def callback(ch, method, properties, body):
         print(" [x] Received %r" % body)
-        ch.basic_ack(delivery_tag = method.delivery_tag)
+        params = json.loads(body)
+        judge(**params)
 
     channel.basic_consume(queue='judge', on_message_callback=callback, auto_ack=True)
 

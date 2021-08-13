@@ -26,12 +26,12 @@ services:
     build: ./judge/
     image: judge_server
     restart: always
+    tty: true
     depends_on: 
       - docker_postgres
       - rabbitmq
     volumes:
       - ./judge:/root/
-
   app:
     container_name: app
     build: .

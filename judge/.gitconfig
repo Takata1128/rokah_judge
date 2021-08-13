@@ -2,4 +2,4 @@
 	name = Takata1128
 	email = t2130072@edu.cc.uec.ac.jp
 [credential]
-	helper = "!f() { /root/.vscode-server/bin/379476f0e13988d90fab105c5c19e7abc8b1dea8/node /tmp/vscode-remote-containers-1b62e71eafa251a090220d45085efcd84025518c.js $*; }; f"
+	helper = "!f() { /root/.vscode-server/bin/379476f0e13988d90fab105c5c19e7abc8b1dea8/node /tmp/vscode-remote-containers-117fbe651dac1141dca374647bc05290e3e46f7c.js $*; }; f"

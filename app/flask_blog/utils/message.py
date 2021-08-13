@@ -9,7 +9,7 @@ def push(**kwargs):
     channel = connection.channel()
 
     channel.queue_declare(queue="judge")
-    properties = pika.BasicProperties(content_type="application/json")
+    properties = pika.BasicProperties(content_type="application/json", delivery_mode=2)
     channel.basic_publish(
         exchange="", routing_key="judge", body=json.dumps(kwargs), properties=properties
     )

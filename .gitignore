@@ -1,2 +1,7 @@
 .ssh
+.gnupg
+.vscode-server
+.bash_history
+.python_history
+data
 rabbitmq-data
