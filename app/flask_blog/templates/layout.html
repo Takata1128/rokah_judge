@@ -33,9 +33,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    {% if not session.logged_in %}
+                    {% if not current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('view.login') }}">ログイン</a>
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">ログイン</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.signup') }}">サインアップ</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -48,7 +51,7 @@
                         <a class="nav-link" href="{{ url_for('problem.new_problem') }}">問題作成</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('view.logout') }}">ログアウト</a>
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">ログアウト</a>
                     </li>
                     {% endif %}
                 </ul>

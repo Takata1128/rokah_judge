@@ -1,8 +1,8 @@
-from flask_blog.views.views import login_required
 from flask import request, redirect, url_for, render_template, flash, session
 from flask_blog import db
 from flask_blog.utils.message import push
 from flask_blog.models.problems import Language, Problem, Submission
+from flask_login.utils import login_required
 from flask import Blueprint
 
 submission = Blueprint("submission", __name__)

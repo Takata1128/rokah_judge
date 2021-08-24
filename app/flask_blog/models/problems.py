@@ -84,6 +84,7 @@ class Submission(db.Model):
         self.wa = wa
         self.tle = tle
         self.re = re
+        self.submitted_at = datetime.utcnow()
 
 
 class Language(db.Model):

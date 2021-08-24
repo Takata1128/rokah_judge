@@ -27,6 +27,23 @@
             <td scope="row">結果</td>
             <td>{{ submission.status }}</td>
         </tr>
+        <tr>
+            <td scope="row">詳細</td>
+            <td>AC: {{ submission.ac }}
+                {% if submission.wa!=0 %}
+                ,
+                WA: {{ submission.wa }}
+                {% endif %}
+                {% if submission.re!=0 %}
+                ,
+                RE: {{ submission.re }}
+                {% endif %}
+                {% if submission.tle!=0 %}
+                ,
+                TLE:{{ submission.tle }}
+                {% endif %}
+            </td>
+        </tr>
     </tbody>
 </table>
 <br><br>
