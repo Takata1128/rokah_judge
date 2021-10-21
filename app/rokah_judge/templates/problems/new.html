@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='problems/new.css') }}">
+
+<form action="{{ url_for('problem.add_problem') }}" method="POST" class="add-problem" novalidate>
+    <div class="form-group">
+        <label for="InputTitle">問題名</label>
+        <input type="text" name="title" id="InputText" class="form-control" required>
+        <div class="invalid-feedback">
+            Please enter problem title.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">問題文</label>
+        <textarea name="text" id="InputText" class="form-control" rows="10" required></textarea>
+        <div class="invalid-feedback">
+            Please enter problem text.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">実行時間制限</label>
+        <input type="text" name="time_limit" value="2" id="InputText" class="form-control" required>
+        <div class="invalid-feedback">
+            Please enter time limit.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">メモリ制限(MB)</label>
+        <input type="text" name="memory_limit" value="256" id="InputText" class="form-control" required>
+        <div class="invalid-feedback">
+            Please enter memory limit.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">制約</label>
+        <textarea name="constraint" id="InputText" class="form-control" rows="5" required></textarea>
+        <div class="invalid-feedback">
+            Please enter constraints.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">入力</label>
+        <textarea name="input" id="InputText" class="form-control" rows="5" required></textarea>
+        <div class="invalid-feedback">
+            Please enter problem input.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">出力</label>
+        <textarea name="output" id="InputText" class="form-control" rows="5" required></textarea>
+        <div class="invalid-feedback">
+            Please enter problem output.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InputText">テストケース</label>
+        <table>
+            <thead>
+                <tr>
+                    <th>Input</th>
+                    <th>Output</th>
+                    <th>IsSample</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><textarea name="testcase_input[]" class="form-control testcase_input" rows="5"
+                            placeholder="入力"></textarea></td>
+                    <td><textarea name="testcase_output[]" class="form-control testcase_output" rows="5"
+                            placeholder="出力"></textarea></td>
+                    <td>
+                        <div name="is_sample[]" class="is_sample">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" id="is_sample" value="checkedValue" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description"></span>
+                                サンプル
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <button type="button" id="btn-clone" class="btn btn-primary">追加</button>
+                        <button type="button" id="btn-remove" class="btn btn-outline-danger">削除</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">作成</button>
+</form>
+
+<script src="{{ url_for('static', filename='js/new.js') }}"></script>
+
+{% endblock %}

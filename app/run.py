@@ -1,4 +1,4 @@
-from flask_blog import app, db
+from rokah_judge import app, db
 from flask_migrate import Migrate
 
 db.init_app(app)

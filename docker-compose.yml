@@ -1,15 +1,15 @@
 version: '3'
 services:
-  docker_postgres:
-    container_name: postgres
-    image: postgres:11.5
+  docker_mysql:
+    container_name: mysql
+    build: ./mysql/
     ports:
-      - 5432:5432
+      - 3306:3306
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: atcoder_problems
-      POSTGRES_INITDB_ARGS: --encoding=UTF-8
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/db:/var/lib/mysql/
   
   rabbitmq:
     container_name: rabbitmq
@@ -28,16 +28,16 @@ services:
     restart: always
     tty: true
     depends_on: 
-      - docker_postgres
+      - docker_mysql
       - rabbitmq
     volumes:
-      - ./judge:/root/
+      - ./judge:/code/
   app:
     container_name: app
     build: .
     image: flask_with_postgres
     depends_on:
-      - docker_postgres
+      - docker_mysql
     ports:
       - 5000:5000
     volumes: 

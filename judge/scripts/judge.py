@@ -1,7 +1,7 @@
+from posix import environ
 from pika import connection
 import os
-import psycopg2
-import psycopg2.extras
+import pymysql.cursors
 import psutil
 import shutil
 import subprocess
@@ -11,18 +11,21 @@ from threading import Timer
 
 
 def get_connection():
-    dsn = os.environ.get("DATABASE_URI")
-    return psycopg2.connect(dsn)
+    host = os.environ.get("DB_HOST")
+    user = os.environ.get("DB_USER")
+    passwd = os.environ.get("DB_PASSWORD")
+    database = os.environ.get("DB_NAME")
+    return pymysql.connect(host=host, user=user, password=passwd, database=database, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
 
 def judge(id):
     with get_connection() as connection:
-        with connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-            # sql = "SELECT * FROM submission WHERE id = {}".format(id)
+        with connection.cursor() as cur:
             cur.execute("SELECT * FROM submission WHERE id = %s", (id,))
             submission_info = dict(cur.fetchone())
             cur.execute(
-                "SELECT * FROM problems WHERE id = %s", (submission_info["problem_id"],)
+                "SELECT * FROM problems WHERE id = %s", (
+                    submission_info["problem_id"],)
             )
 
             try:
@@ -73,7 +76,8 @@ def judge(id):
                         memoryusage = max(
                             memoryusage, process.memory_info().rss / 1024 * 35
                         )
-                        output, error = process.communicate(in_context.encode())
+                        output, error = process.communicate(
+                            in_context.encode())
                     finally:
                         my_timer.cancel()
                         datetime2 = datetime.datetime.now().timestamp() * 1000

@@ -4,3 +4,5 @@ Flask-Login
 psycopg2
 Flask-Migrate
 pika
+pymysql
+cryptography
