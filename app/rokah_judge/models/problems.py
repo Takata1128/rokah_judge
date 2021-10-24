@@ -13,7 +13,6 @@ class Problem(db.Model):
     constraint = db.Column(db.Text)
     input = db.Column(db.Text)
     output = db.Column(db.Text)
-    sample = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
     cases = db.relationship("Testcase", backref="problem", lazy=False)
 
@@ -26,7 +25,7 @@ class Problem(db.Model):
         constraint=None,
         input=None,
         output=None,
-        sample=None,
+        cases=None,
     ):
         self.title = title
         self.text = text
@@ -35,7 +34,7 @@ class Problem(db.Model):
         self.constraint = constraint
         self.input = input
         self.output = output
-        self.sample = sample
+        self.cases = cases
         self.created_at = datetime.utcnow()
 
     def __repr__(self):

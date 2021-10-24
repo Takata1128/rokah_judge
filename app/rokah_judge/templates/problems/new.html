@@ -95,6 +95,11 @@
     <button type="submit" class="btn btn-primary">作成</button>
 </form>
 
+<form action="{{ url_for('problem.upload_problem') }}" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" multiple="" />
+    <input type="submit" />
+</form>
+
 <script src="{{ url_for('static', filename='js/new.js') }}"></script>
 
 {% endblock %}
