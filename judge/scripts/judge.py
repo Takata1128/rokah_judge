@@ -21,7 +21,7 @@ def get_connection():
 def judge(id):
     with get_connection() as connection:
         with connection.cursor() as cur:
-            cur.execute("SELECT * FROM submission WHERE id = %s", (id,))
+            cur.execute("SELECT * FROM submissions WHERE id = %s", (id,))
             submission_info = dict(cur.fetchone())
             cur.execute(
                 "SELECT * FROM problems WHERE id = %s", (
@@ -30,6 +30,11 @@ def judge(id):
 
             try:
                 problem_info = dict(cur.fetchone())
+                cur.execute(
+                    "SELECT * FROM testcases WHERE problem_id = %s", (
+                        submission_info["problem_id"],)
+                )
+                cases = cur.fetchall()
                 dir_name = "/root/tmp_{}".format(id)
                 os.makedirs(dir_name)
                 exefile = dir_name + "/{}.py".format(id)
@@ -42,15 +47,7 @@ def judge(id):
                 re = 0
                 status_all = "WJ..."
 
-                for in_file in glob.glob(
-                    "/root/data/{}/in/*".format(problem_info["id"])
-                ):
-                    print("check file {}...".format(in_file))
-                    with open(in_file) as f:
-                        in_context = f.read()
-                    out_file = in_file.replace("in", "out")
-                    with open(out_file) as f:
-                        out_context = f.read()
+                for index,case in enumerate(cases):
                     command = "python3 " + exefile
                     process = psutil.Popen(
                         command,
@@ -73,11 +70,12 @@ def judge(id):
                     my_timer = Timer(time_limit * 1.1, process.kill)
                     try:
                         my_timer.start()
-                        memoryusage = max(
-                            memoryusage, process.memory_info().rss / 1024 * 35
-                        )
+                        case_memory_usage = process.memory_info().rss / 1024
                         output, error = process.communicate(
-                            in_context.encode())
+                            case['content'].encode())
+                        memoryusage = max(
+                            memoryusage, case_memory_usage
+                        )
                     finally:
                         my_timer.cancel()
                         datetime2 = datetime.datetime.now().timestamp() * 1000
@@ -93,14 +91,21 @@ def judge(id):
                         re += 1
                         status = "RE"
                         print(error)
-                    elif output.decode() == out_context:
+                    elif output.decode().rstrip() == case['answer'].rstrip():
                         ac += 1
                         status = "AC"
                     else:
                         wa += 1
                         status = "WA"
                     spent_time = max(spent_time, case_time)
-                    # print("status:{}".format(status))
+                    print('case {}: {}'.format(index,status))
+                    print('time :{}'.format(case_time))
+                    print('memory :{}'.format(case_memory_usage))
+                    print('input :{}'.format(case['content']))
+                    print('output :{}'.format(output.decode().rstrip()))
+                    print('expected :{}'.format(case['answer'].rstrip()))
+                    
+
 
                     if status == "WA":
                         status_all = "WA"
@@ -110,7 +115,7 @@ def judge(id):
                         status_all = "TLE"
 
                     cur.execute(
-                        "UPDATE submission SET ac = %s, wa = %s, tle = %s, re = %s, status = %s WHERE id = %s",
+                        "UPDATE submissions SET ac = %s, wa = %s, tle = %s, re = %s, status = %s WHERE id = %s",
                         (
                             ac,
                             wa,
@@ -122,11 +127,10 @@ def judge(id):
                     )
                     connection.commit()
             finally:
-                shutil.rmtree(dir_name)
                 if status_all == "WJ...":
                     status_all = "AC"
                 cur.execute(
-                    "UPDATE submission SET ac = %s, wa = %s, tle = %s, re = %s, status = %s WHERE id = %s",
+                    "UPDATE submissions SET ac = %s, wa = %s, tle = %s, re = %s, status = %s WHERE id = %s",
                     (
                         ac,
                         wa,
