@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
-      - ./mysql/db:/var/lib/mysql/
+      - ./mysql/db:/var/lib/mysql
   
   rabbitmq:
     container_name: rabbitmq
@@ -31,15 +31,15 @@ services:
       - docker_mysql
       - rabbitmq
     volumes:
-      - ./judge:/code/
+      - ./judge:/code
   app:
     container_name: app
     build: .
     image: flask_with_postgres
     depends_on:
       - docker_mysql
-    ports:
-      - 5000:5000
+    expose:
+      - 9876
     volumes: 
       - ./app:/code/app
     stdin_open: true
@@ -48,3 +48,12 @@ services:
       SQLALCHEMY_POOL_SIZE: 5
       SQLALCHEMY_MAX_OVERFLOW: 10
       SQLALCHEMY_POOL_TIMEOUT: 30
+    restart: always
+  web:
+    container_name: web
+    build: ./nginx/
+    ports:
+      - 9090:9123
+    depends_on:
+      - app
+    restart: always

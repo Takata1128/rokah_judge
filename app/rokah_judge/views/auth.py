@@ -26,7 +26,7 @@ def login_post():
         return redirect(url_for("auth.login"))
 
     login_user(user, remember=remember)
-    return redirect(url_for("view.top"))
+    return redirect(url_for("view.top", _external=True))
 
 
 @auth.route("/signup", methods=["GET"])

@@ -10,6 +10,7 @@ RUN pip install --upgrade pip --no-cache-dir
 RUN pip install -r /code/app/requirements.txt --no-cache-dir
 RUN apt update && apt install -y git postgresql-client
 
-EXPOSE 5000
-ENV FLASK_APP "/code/app/run.py"
-CMD ["/code/entrypoint.sh"]
+EXPOSE 9876
+WORKDIR /code/app
+ENTRYPOINT [ "gunicorn", "run:app" ]
+CMD [ "-c", "gunicorn_settings.py" ]

@@ -6,3 +6,4 @@ Flask-Migrate
 pika
 pymysql
 cryptography
+gunicorn
