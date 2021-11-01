@@ -6,3 +6,4 @@
 data
 rabbitmq-data
 mysql/db
+app/migrations

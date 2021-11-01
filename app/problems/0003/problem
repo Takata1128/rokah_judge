@@ -1,0 +1,22 @@
+[title]
+Zigzag sequence
+[statement]
+$N$人が整列しています。前から$i$番目の人の身長は$A_i$mです。<br>
+前からi番目の人は、$j< i$ かつ $A_j\geq A_i$となるような人$j$が存在するときのみ、前からこの列を見たときに視認することができ、そうでなければ隠れてしまい視認することができません。<br>
+前からこの列を見たとき、何人の人を視認することができるでしょうか？
+[time]
+2
+[memory]
+256
+[constraints]
+$1 \leq N \leq 2\times10^5$<br>
+$1 \leq A_i \leq 2\times10^5$
+[input]
+$N$<br>
+$A_1, A_2, ... ,A_N$
+[output]
+答えを出力してください
+[sample]
+01.in
+02.in
+

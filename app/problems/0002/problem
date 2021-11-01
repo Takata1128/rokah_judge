@@ -1,0 +1,18 @@
+[title]
+String Reverse
+[statement]
+文字列$S$が入力されるので、その文字列を反転させた文字列を出力してください。
+[time]
+2
+[memory]
+256
+[constraints]
+$1 \leq |S| \leq 2\times10^5$
+[input]
+$S$
+[output]
+答えを出力してください
+[sample]
+01.in
+02.in
+

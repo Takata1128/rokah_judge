@@ -1,9 +1,7 @@
 import os
 
 DEBUG = True
-USERNAME = "roka"
-PASSWORD = "pass"
-SECRET_KEY = "secret"
+SECRET_KEY = 'secret'
 SQLALCHEMY_DATABASE_URI = (
     "mysql+pymysql://{user}:{password}@{host}/{database}?charset=utf8".format(
         **{

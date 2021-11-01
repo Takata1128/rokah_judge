@@ -1,5 +1,6 @@
 from rokah_judge import db
 from datetime import datetime
+from sqlalchemy.dialects.mysql import LONGTEXT
 
 
 class Submission(db.Model):
@@ -8,7 +9,7 @@ class Submission(db.Model):
     user_id = db.Column(db.Integer)
     problem_id = db.Column(db.Integer)
     language = db.Column(db.String(20))
-    code = db.Column(db.Text)
+    code = db.Column(LONGTEXT)
     status = db.Column(db.String(20))
     ac = db.Column(db.Integer)
     wa = db.Column(db.Integer)

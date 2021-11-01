@@ -1,0 +1,18 @@
+[title]
+A+B Problem
+[statement]
+$A+B$を計算してください
+[time]
+2
+[memory]
+256
+[constraints]
+$1 \leq A,B \leq 2\times10^5$
+[input]
+$A \ B$
+[output]
+答えを出力してください
+[sample]
+01.in
+02.in
+
