@@ -2,9 +2,9 @@
 rokah (offline) judge
 
 # Setup
-'''
+```
 ./docker-compose_up.sh
-'''
+```
 して、ブラウザでlocalhost:9090に接続
 
 # TODO
