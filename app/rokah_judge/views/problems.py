@@ -22,8 +22,10 @@ problem = Blueprint("problem", __name__)
 @login_required
 def show_problem(id):
     problem = Problem.query.get(id)
+    samples = Testcase.query.filter(
+        Testcase.problem_id == id, Testcase.is_sample).order_by(Testcase.id.desc()).all()
     languages = Language.query.order_by(Language.id.desc()).all()
-    return render_template("problems/show.html", problem=problem, languages=languages)
+    return render_template("problems/show.html", problem=problem, samples=samples, languages=languages)
 
 
 @problem.route("/problems/", methods=["GET"])
@@ -76,7 +78,9 @@ def add_problem():
 @login_required
 def edit_problem(id):
     problem = Problem.query.get(id)
-    return render_template("problems/edit.html", problem=problem)
+    cases = Testcase.query.filter(
+        Testcase.problem_id == id).order_by(Testcase.id.desc()).all()
+    return render_template("problems/edit.html", problem=problem, cases=cases)
 
 
 @problem.route("/problems/<int:id>/update", methods=["POST"])
@@ -92,6 +96,26 @@ def update_problem(id):
     problem.output = request.form["output"]
     db.session.merge(problem)
     db.session.commit()
+
+    case_indices = request.form.getlist("testcase_index[]")
+    case_inputs = request.form.getlist("testcase_input[]")
+    case_outputs = request.form.getlist("testcase_output[]")
+    is_samples = request.form.getlist("is_sample")
+
+    for id, input, output, is_sample in zip(case_indices, case_inputs, case_outputs, is_samples):
+        if id == -1:
+            case = Testcase("edit", input, output, is_sample)
+        else:
+            case = Testcase.query.get(id)
+            case.input = input
+            case.output = output
+            case.is_sample = True if is_sample == '1' else False
+            print(id)
+            print(input)
+            print(output)
+            print(is_sample)
+        db.session.merge(case)
+        db.session.commit()
     flash("問題が更新されました")
     return redirect(url_for("problem.show_problems"))
 

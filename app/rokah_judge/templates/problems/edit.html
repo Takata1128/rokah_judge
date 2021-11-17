@@ -54,6 +54,51 @@
             Please enter problem output.
         </div>
     </div>
+
+    <div class="form-group">
+        <label for="InputText">テストケース</label>
+        <table>
+            <thead>
+                <tr>
+                    <th>CaseID</th>
+                    <th>Input</th>
+                    <th>Output</th>
+                    <th>IsSample</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for case in cases %}
+                <tr>
+                    <td><textarea name="testcase_index[]" class="form-control testcase_index" rows="5"
+                            placeholder="-1">{{case.id}}</textarea></td>
+                    <td><textarea name="testcase_input[]" class="form-control testcase_input" rows="5"
+                            placeholder="入力">{{ case.content }}</textarea></td>
+                    <td><textarea name="testcase_output[]" class="form-control testcase_output" rows="5"
+                            placeholder="出力">{{ case.answer }}</textarea></td>
+                    <td>
+                        <div name="is_sample[]" class="is_sample">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="is_sample" id="is_sample" value="1"
+                                    class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description"></span>
+                                サンプル
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <button type="button" id="btn-clone" class="btn btn-primary">追加</button>
+                        <button type="button" id="btn-remove" class="btn btn-outline-danger">削除</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
     <button type="submit" class="btn btn-primary">更新</button>
 </form>
 
@@ -73,4 +118,5 @@
         }, false);
     })();
 </script>
+<script src="{{ url_for('static', filename='js/edit.js') }}"></script>
 {% endblock %}
