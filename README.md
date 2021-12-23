@@ -15,11 +15,13 @@ docker context use <ecsのcontext>
 docker compose up
 ```
 
+## DB初期化
 ```
 docker exec -it app /bin/bash
 ./entrypoint.sh
 ```
 で、デフォルトの問題と言語が追加される。（なんとかしたい...）
+
 # TODO
 サンプルの表示
 テストケース修正機能
