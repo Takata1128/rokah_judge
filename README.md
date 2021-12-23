@@ -2,10 +2,19 @@
 rokah (offline) judge
 
 # Setup
+## Local
 ```
 ./docker-compose_up.sh
 ```
-して、ブラウザでlocalhost:9090に接続
+して、ブラウザでlocalhost:9123に接続
+
+## Deploy
+
+```
+docker context use <ecsのcontext>
+docker compose up
+```
+
 ```
 docker exec -it app /bin/bash
 ./entrypoint.sh
