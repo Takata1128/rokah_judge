@@ -1,0 +1,68 @@
+version: '3'
+services:
+  docker_mysql:
+    container_name: mysql
+    build: ./mysql/
+    # image: rokah_judge_mysql
+    image: 000220986302.dkr.ecr.ap-northeast-1.amazonaws.com/rokah_judge_mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/db:/var/lib/mysql
+
+  rabbitmq:
+    container_name: rabbitmq
+    # tty: true
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq
+
+  judge_server:
+    container_name: judge_server
+    build: ./judge/
+    # image: rokah_judge_judge_server
+    image: 000220986302.dkr.ecr.ap-northeast-1.amazonaws.com/rokah_judge_judge_server
+    restart: always
+    depends_on:
+      - docker_mysql
+      - rabbitmq
+    tty: true
+    volumes:
+      - ./judge:/code
+    environment:
+      WAIT_HOSTS: docker_mysql:3306, rabbitmq:5672
+  app:
+    container_name: app
+    build: .
+    # image: rokah_judge_app
+    image: 000220986302.dkr.ecr.ap-northeast-1.amazonaws.com/rokah_judge_app
+    depends_on:
+      - docker_mysql
+    expose:
+      - 9876
+    volumes:
+      - ./app:/code/app
+    stdin_open: true
+    environment:
+      ENV_CONFIG: docker
+      SQLALCHEMY_POOL_SIZE: 5
+      SQLALCHEMY_MAX_OVERFLOW: 10
+      SQLALCHEMY_POOL_TIMEOUT: 30
+      WAIT_HOSTS: docker_mysql:3306
+    restart: always
+  web:
+    container_name: web
+    build: ./nginx/
+    # image: rokah_judge_web
+    image: 000220986302.dkr.ecr.ap-northeast-1.amazonaws.com/rokah_judge_web
+    ports:
+      - 9123:9123
+    depends_on:
+      - app
+    restart: always
